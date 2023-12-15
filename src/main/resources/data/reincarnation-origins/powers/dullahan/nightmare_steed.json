@@ -2,33 +2,6 @@
   "name": "Behold, a Pale Horse",
   "description": "Conjure your loyal NightMare to this plane.",
   "type": "origins:multiple",
-  "resource": {
-    "type": "origins:resource",
-    "min": 0,
-    "max": 1,
-    "hud_render": {
-      "should_render": false
-    }
-  },
-  "callback": {
-    "type": "origins:action_on_callback",
-    "entity_action_chosen": {
-      "type": "origins:nothing"
-    },
-    "execute_chosen_when_orb": true,
-    "entity_action_lost": {
-      "type": "origins:execute_command",
-      "command": "function reincarnation-origins:dullahan/kill_steed"
-    },
-    "entity_action_removed": {
-      "type": "origins:execute_command",
-      "command": "function reincarnation-origins:dullahan/kill_steed"
-    },
-    "entity_action_respawned": {
-      "type": "origins:execute_command",
-      "command": "function reincarnation-origins:dullahan/kill_steed"
-    }
-  },
   "activate": {
     "type": "origins:active_self",
     "hud_render": {
@@ -36,8 +9,8 @@
       "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_02.png",
       "bar_index": 17
     },
-    "key": "secondary",
-    "cooldown": 600,
+    "key": "key.origins.secondary_active",
+    "cooldown": 200,
     "entity_action": {
       "type": "origins:and",
       "actions": [
@@ -50,8 +23,35 @@
           "type": "origins:play_sound",
           "sound": "block.beacon.power_select",
           "pitch": 0.7
+        },
+        {
+          "type": "origins:area_of_effect",
+          "radius": 1,
+          "bientity_action": {
+            "type": "origins:mount"
+          },
+          "bientity_condition": {
+            "type": "origins:target_condition",
+            "condition": {
+              "type": "origins:and",
+              "conditions": [
+                {
+                  "type": "origins:entity_type",
+                  "entity_type": "minecraft:skeleton_horse"
+                },
+                {
+                  "type": "origins:nbt",
+                  "nbt": "{Tags: ['carn.nightmareSteed']}"
+                }
+              ]
+            }
+          }
         }
       ]
+    },
+    "condition": {
+      "type": "origins:riding",
+      "inverted": true
     }
   }
 }
